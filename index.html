@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Sagacious Tribe</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Pi SDK -->
+  <script src="https://sdk.minepi.com/pi-sdk.js"></script>
+
+  <!-- Supabase -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+
+<!-- USER -->
+<div class="user-bar">
+  <p id="user">Not logged in</p>
+</div>
+
+<!-- HEADER -->
+<div class="header">
+  <h1>🌐 Sagacious Tribe</h1>
+  <p>Social • Marketplace • Eco • Security</p>
+</div>
+
+<!-- NAV -->
+<div class="nav">
+  <button onclick="showModule('tribe')">💬 Tribe Talk</button>
+  <button onclick="showModule('ecosaga')">🎧 EcoSaga</button>
+  <button onclick="showModule('afrispice')">🛒 Afrispice</button>
+  <button onclick="showModule('cyber')">🛡️ CyberGuardians</button>
+</div>
+
+<!-- LOGIN -->
+<div class="center">
+  <button onclick="loginWithPi()">Login with Pi</button>
+</div>
+
+<!-- MODULES -->
+
+<div id="tribe" class="module">
+  <h2>💬 Tribe Talk</h2>
+  <p>Community interaction, posts, and engagement (Coming Soon)</p>
+</div>
+
+<div id="ecosaga" class="module">
+  <h2>🎧 EcoSaga Studio</h2>
+  <p>Music production, eco-awareness, and studio directory (Coming Soon)</p>
+</div>
+
+<div id="afrispice" class="module">
+  <h2>🛒 Afrispice Marketplace</h2>
+
+  <div class="card">
+    <input type="text" placeholder="Product Name">
+    <input type="text" placeholder="Price in Pi">
+    <button onclick="addProduct()">List Product</button>
+  </div>
+
+  <div id="product-list"></div>
+</div>
+
+<div id="cyber" class="module">
+  <h2>🛡️ CyberGuardians/HSE</h2>
+
+  <div class="card">
+    <input type="text" placeholder="Report Title">
+    <textarea placeholder="Describe issue"></textarea>
+    <button onclick="addReport()">Submit</button>
+  </div>
+
+  <div id="report-list"></div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <a href="pages/terms.html">Terms</a> |
+  <a href="pages/privacy.html">Privacy</a>
+  <p>Powered by Pi Network</p>
+</div>
+
+<!-- JS -->
+<script src="js/app.js"></script>
+<script src="modules/afrispice.js"></script>
+<script src="modules/cyberguardians.js"></script>
+
+</body>
+</html>
