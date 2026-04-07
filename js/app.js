@@ -1,5 +1,10 @@
-const SUPABASE_URL = "YOUR_URL";
-const SUPABASE_KEY = "YOUR_KEY";
+let supabaseClient = null;
+
+try {
+  supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+} catch (e) {
+  console.log("Supabase not connected yet");
+}
 
 const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
