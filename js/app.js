@@ -1,13 +1,7 @@
 const SUPABASE_URL = "https://gbgmcncsbrtfiaephfhf.supabase.co";
 const SUPABASE_KEY = "sb_publishable_28L5eJ-sNCMTCP-iQ57wRw_5JjA0wVj";
 
-let supabaseClient = null;
-
-try {
-  supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-} catch (e) {
-  console.log("Supabase not connected yet");
-}
+const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
 // NAV
 function showModule(id) {
