@@ -68,7 +68,7 @@ async function addProduct() {
 
   const user = localStorage.getItem("pi_user") || "Anonymous";
 
-  const { error } = await supabase
+  const { error } = await supabaseClient
     .from("products")
     .insert([{ name, price, user }]);
 
@@ -114,7 +114,7 @@ async function addReport() {
 
   const user = localStorage.getItem("pi_user") || "Anonymous";
 
-  const { error } = await supabase
+  const { error } = await supabaseClient
     .from("reports")
     .insert([{ title, description, user }]);
 
