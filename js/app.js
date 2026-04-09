@@ -1,7 +1,7 @@
 const SUPABASE_URL = "https://gbgmcncsbrtfiaephfhf.supabase.co";
 const SUPABASE_KEY = "sb_publishable_28L5eJ-sNCMTCP-iQ57wRw_5JjA0wVj";
 
-const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
 // NAV
 function showModule(id) {
@@ -37,7 +37,7 @@ window.onload = () => {
 // ==========================
 
 async function loadProducts() {
-  const { data, error } = await supabase.from("products").select("*");
+  const { data, error } = await supabaseClient.from("products").select("*");
 
   if (error) {
     console.log("Error loading products:", error);
@@ -84,7 +84,7 @@ async function addProduct() {
 // ==========================
 
 async function loadReports() {
-  const { data, error } = await supabase.from("reports").select("*");
+  const { data, error } = await supabaseClient.from("reports").select("*");
 
   if (error) {
     console.log("Error loading reports:", error);
