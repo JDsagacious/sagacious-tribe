@@ -1,3 +1,5 @@
+console.log("JS LOADED");
+
 const SUPABASE_URL = "https://gbgmcncsbrtfiaephfhf.supabase.co";
 const SUPABASE_KEY = "sb_publishable_28L5eJ-sNCMTCP-iQ57wRw_5JjA0wVj";
 
