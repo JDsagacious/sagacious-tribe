@@ -19,7 +19,22 @@ if (piUser) userElem.innerText = "👤 " + piUser;
 
 // LOGIN
 function loginWithPi() {
-  Pi.init({ version: "2.0", sandbox: true });
+  Pi.init({ version: "2.0", sandbox: false });
+
+  Pi.authenticate(['username'], auth => {
+    const username = auth.user.username;
+
+    localStorage.setItem("pi_user", username);
+
+    document.getElementById("user").innerText = "👤 " + username;
+
+    console.log("Logged in as:", username);
+
+  }, err => {
+    console.log("Login failed", err);
+    alert("Login failed");
+  });
+}
 
   Pi.authenticate(['username'], auth => {
     localStorage.setItem("pi_user", auth.user.username);
