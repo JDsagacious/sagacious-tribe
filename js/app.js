@@ -19,7 +19,7 @@ if (piUser) userElem.innerText = "👤 " + piUser;
 
 // LOGIN
 function loginWithPi() {
-  Pi.init({ version: "2.0", sandbox: false });
+  Pi.init({ version: "2.0", sandbox: true });
 
   Pi.authenticate(['username'], auth => {
     const username = auth.user.username;
