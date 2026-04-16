@@ -36,12 +36,6 @@ function loginWithPi() {
   });
 }
 
-  Pi.authenticate(['username'], auth => {
-    localStorage.setItem("pi_user", auth.user.username);
-    userElem.innerText = "👤 " + auth.user.username;
-  }, () => alert("Login failed"));
-}
-
 // INIT
 window.onload = () => {
   showModule('tribe');
