@@ -16,10 +16,19 @@ function showModule(id) {
 }
 
 // USER
-const userElem = document.getElementById("user");
-let piUser = localStorage.getItem("pi_user");
+let userElem;
 
-if (piUser) userElem.innerText = "👤 " + piUser;
+// INIT
+window.onload = () => {
+  userElem = document.getElementById("user");
+
+  let piUser = localStorage.getItem("pi_user");
+  if (piUser) userElem.innerText = "👤 " + piUser;
+
+  showModule('tribe');
+  loadProducts();
+  loadReports();
+};
 
 // LOGIN
 function loginWithPi() {
