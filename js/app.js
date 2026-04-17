@@ -48,13 +48,6 @@ function loginWithPi() {
   });
 }
 
-// INIT
-window.onload = () => {
-  showModule('tribe');
-  loadProducts();
-  loadReports();
-};
-
 // ==========================
 // AFRISPICE (PRODUCTS)
 // ==========================
