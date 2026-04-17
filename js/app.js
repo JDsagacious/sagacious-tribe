@@ -6,7 +6,7 @@ const SUPABASE_KEY = "sb_publishable_28L5eJ-sNCMTCP-iQ57wRw_5JjA0wVj";
 const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
 // INIT PI SDK EARLY
-Pi.init({ version: "2.0", sandbox: true });
+Pi.init({ version: "2.0", sandbox: false });
 console.log("Pi SDK initialized");
 
 // NAV
