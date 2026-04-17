@@ -33,6 +33,8 @@ window.onload = () => {
 // LOGIN
 function loginWithPi() {
 
+console.log("Login button clicked");
+  
   Pi.authenticate(['username'], auth => {
     const username = auth.user.username;
 
