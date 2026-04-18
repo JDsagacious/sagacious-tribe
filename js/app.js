@@ -5,9 +5,7 @@ const SUPABASE_KEY = "sb_publishable_28L5eJ-sNCMTCP-iQ57wRw_5JjA0wVj";
 
 const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-// INIT PI SDK EARLY
-Pi.init({ version: "2.0", sandbox: true });
-console.log("Pi SDK initialized");
+// Pi SDK will be initialized inside window.onload
 
 // NAV
 function showModule(id) {
@@ -21,6 +19,14 @@ let userElem;
 // INIT
 window.onload = () => {
   userElem = document.getElementById("user");
+
+  // ✅ INIT PI HERE (correct place)
+  if (window.Pi) {
+    Pi.init({ version: "2.0", sandbox: true });
+    console.log("Pi SDK initialized inside onload");
+  } else {
+    console.log("Pi SDK NOT loaded");
+  }
 
   let piUser = localStorage.getItem("pi_user");
   if (piUser) userElem.innerText = "👤 " + piUser;
@@ -44,7 +50,7 @@ function loginWithPi() {
     const username = auth.user.username;
 
     localStorage.setItem("pi_user", username);
-    document.getElementById("user").innerText = "👤 " + username;
+    userElem.innerText = "👤 " + username;
 
     console.log("Logged in as:", username);
 
