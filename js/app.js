@@ -32,21 +32,24 @@ window.onload = () => {
 
 // LOGIN
 function loginWithPi() {
+  console.log("Login button clicked");
+  console.log("Pi object:", window.Pi);
 
-console.log("Login button clicked");
-  
+  if (!window.Pi) {
+    alert("Pi SDK not available");
+    return;
+  }
+
   Pi.authenticate(['username'], auth => {
     const username = auth.user.username;
 
     localStorage.setItem("pi_user", username);
-
     document.getElementById("user").innerText = "👤 " + username;
 
     console.log("Logged in as:", username);
 
   }, err => {
     console.log("Login failed", err);
-    alert("Login failed");
   });
 }
 
