@@ -22,7 +22,7 @@ window.onload = () => {
 
   // ✅ INIT PI HERE (correct place)
   if (window.Pi) {
-    Pi.init({ version: "2.0", sandbox: true });
+    Pi.init({ version: "2.0", sandbox: false });
     console.log("Pi SDK initialized inside onload");
   } else {
     console.log("Pi SDK NOT loaded");
