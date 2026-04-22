@@ -185,7 +185,7 @@ async function loadPosts() {
 }
 
 async function addPost() {
-  const content = document.getElementById("post-content").value;
+ const content = document.getElementById("post-content").value.trim();
 
   if (!content) {
     alert("Write something first");
