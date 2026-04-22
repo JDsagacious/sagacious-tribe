@@ -31,9 +31,10 @@ window.onload = () => {
   let piUser = localStorage.getItem("pi_user");
   if (piUser) userElem.innerText = "👤 " + piUser;
 
-  showModule('tribe');
-  loadProducts();
-  loadReports();
+ showModule('tribe');
+loadPosts();     // ✅ ADD THIS
+loadProducts();
+loadReports();
 };
 
 // LOGIN
@@ -150,4 +151,58 @@ async function addReport() {
   }
 
   loadReports();
+}
+
+// ==========================
+// TRIBE TALK (POSTS)
+// ==========================
+
+async function loadPosts() {
+  const { data, error } = await supabaseClient
+    .from("posts")
+    .select("*")
+    .order("created_at", { ascending: false });
+
+  if (error) {
+    console.log("Error loading posts:", error);
+    return;
+  }
+
+  const container = document.getElementById("post-list");
+  container.innerHTML = "";
+
+  data.forEach(p => {
+    const div = document.createElement("div");
+    div.className = "card";
+
+    div.innerHTML = `
+      <p>${p.content}</p>
+      <small>👤 ${p.username} • ${new Date(p.created_at).toLocaleString()}</small>
+    `;
+
+    container.appendChild(div);
+  });
+}
+
+async function addPost() {
+  const content = document.getElementById("post-content").value;
+
+  if (!content) {
+    alert("Write something first");
+    return;
+  }
+
+  const username = localStorage.getItem("pi_user") || "Anonymous";
+
+  const { error } = await supabaseClient
+    .from("posts")
+    .insert([{ content, username }]);
+
+  if (error) {
+    console.log("Insert error:", error);
+    return;
+  }
+
+  document.getElementById("post-content").value = "";
+  loadPosts();
 }
