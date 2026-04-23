@@ -47,6 +47,8 @@ function loginWithPi() {
     return;
   }
 
+alert("Calling Pi.authenticate...");
+  
   Pi.authenticate(['username'], auth => {
     const username = auth.user.username;
 
