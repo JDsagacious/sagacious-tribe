@@ -16,14 +16,18 @@ function showModule(id) {
 // USER
 let userElem;
 
-// INIT
-window.onload = () => {
+// INIT (FIXED)
+document.addEventListener("DOMContentLoaded", function () {
+
   userElem = document.getElementById("user");
 
-  // ✅ INIT PI HERE (correct place)
+  // ✅ INIT PI PROPERLY
   if (window.Pi) {
-    Pi.init({ version: "2.0", sandbox: true });
-    console.log("Pi SDK initialized inside onload");
+    Pi.init({
+      version: "2.0",
+      sandbox: true
+    });
+    console.log("Pi initialized (SANDBOX MODE)");
   } else {
     console.log("Pi SDK NOT loaded");
   }
@@ -31,11 +35,11 @@ window.onload = () => {
   let piUser = localStorage.getItem("pi_user");
   if (piUser) userElem.innerText = "👤 " + piUser;
 
- showModule('tribe');
-loadPosts();     // ✅ ADD THIS
-loadProducts();
-loadReports();
-};
+  showModule('tribe');
+  loadPosts();
+  loadProducts();
+  loadReports();
+});
 
 // LOGIN
 function loginWithPi() {
@@ -46,8 +50,6 @@ function loginWithPi() {
     alert("Pi SDK not available");
     return;
   }
-
-alert("Calling Pi.authenticate...");
   
   Pi.authenticate(['username'], auth => {
     const username = auth.user.username;
