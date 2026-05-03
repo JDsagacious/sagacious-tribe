@@ -46,6 +46,22 @@
 <div id="tribe" class="module">
   <h2>💬 Tribe Talk</h2>
 
+  <!-- ROOM SELECT -->
+  <select id="room" onchange="loadMessages()">
+    <option value="global">🌍 Global</option>
+    <option value="artists">🎤 Artists</option>
+    <option value="fans">❤️ Fans</option>
+  </select>
+
+  <!-- MESSAGE INPUT -->
+  <div class="card">
+    <textarea id="message-input" placeholder="Type message..."></textarea>
+    <button onclick="sendMessage()">Send</button>
+  </div>
+
+  <!-- CHAT DISPLAY -->
+  <div id="chat-box"></div>
+
   <!-- CREATE POST -->
   <div class="card">
     <textarea id="post-content" placeholder="What's on your mind?"></textarea>
