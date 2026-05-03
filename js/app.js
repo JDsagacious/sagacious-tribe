@@ -42,16 +42,17 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 // LOGIN
-function loginWithPi() {
+async function loginWithPi() {
   console.log("Login button clicked");
-  console.log("Pi object:", window.Pi);
 
   if (!window.Pi) {
     alert("Pi SDK not available");
     return;
   }
-  
-  Pi.authenticate(['username'], auth => {
+
+  try {
+    const auth = await Pi.authenticate(['username']);
+
     const username = auth.user.username;
 
     localStorage.setItem("pi_user", username);
@@ -59,9 +60,10 @@ function loginWithPi() {
 
     console.log("Logged in as:", username);
 
-  }, err => {
+  } catch (err) {
     console.log("Login failed", err);
-  });
+    alert("Login failed");
+  }
 }
 
 // ==========================
