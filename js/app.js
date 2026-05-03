@@ -33,7 +33,13 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   let piUser = localStorage.getItem("pi_user");
-  if (piUser) userElem.innerText = "👤 " + piUser;
+  if (piUser) {
+  userElem.innerText = "👤 " + piUser;
+
+  // ✅ hide button if already logged in
+  const btn = document.getElementById("login-btn");
+  if (btn) btn.style.display = "none";
+}
 
   showModule('tribe');
   loadPosts();
@@ -56,7 +62,11 @@ async function loginWithPi() {
     const username = auth.user.username;
 
     localStorage.setItem("pi_user", username);
-    userElem.innerText = "👤 " + username;
+userElem.innerText = "👤 " + username;
+
+// ✅ HIDE LOGIN BUTTON AFTER LOGIN
+const btn = document.getElementById("login-btn");
+if (btn) btn.style.display = "none";
 
     console.log("Logged in as:", username);
 
