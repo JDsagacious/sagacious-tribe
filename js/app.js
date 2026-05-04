@@ -45,6 +45,10 @@ document.addEventListener("DOMContentLoaded", function () {
   loadPosts();
   loadProducts();
   loadReports();
+
+  loadMessages();     // load initial chat
+subscribeToChat();  // enable real-time
+  
 });
 
 // LOGIN
@@ -221,4 +225,89 @@ async function addPost() {
 
   document.getElementById("post-content").value = "";
   loadPosts();
+}
+
+// ==========================
+// TRIBE TALK (REAL-TIME CHAT)
+// ==========================
+
+// LOAD MESSAGES
+async function loadMessages() {
+ const roomSelect = document.getElementById("room");
+if (!roomSelect) return;
+
+const room = roomSelect.value;
+
+  const { data, error } = await supabaseClient
+    .from("messages")
+    .select("*")
+    .eq("room", room)
+    .order("created_at", { ascending: true });
+
+  if (error) {
+    console.log("Error loading messages:", error);
+    return;
+  }
+
+ const box = document.getElementById("chat-box");
+if (!box) return;
+
+box.innerHTML = "";
+
+  data.forEach(msg => {
+    const div = document.createElement("div");
+    div.className = "card";
+
+    div.innerHTML = `
+      <p>${msg.message}</p>
+      <small>👤 ${msg.username}</small>
+    `;
+
+    box.appendChild(div);
+  });
+
+  // auto scroll down
+  box.scrollTop = box.scrollHeight;
+}
+
+// SEND MESSAGE
+async function sendMessage() {
+  const input = document.getElementById("message-input");
+  if (!input) return;
+  
+  const message = input.value.trim();
+const roomSelect = document.getElementById("room");
+if (!roomSelect) return;
+
+const room = roomSelect.value; 
+
+  if (!message) return;
+
+  const username = localStorage.getItem("pi_user") || "Anonymous";
+
+  const { error } = await supabaseClient
+    .from("messages")
+    .insert([{ message, username, room }]);
+
+  if (error) {
+    console.log("Send error:", error);
+    return;
+  }
+
+ input.value = "";
+loadMessages(); // instant update
+}
+
+// REAL-TIME SUBSCRIPTION
+function subscribeToChat() {
+  supabaseClient
+    .channel("public:messages")
+    .on(
+      "postgres_changes",
+      { event: "INSERT", schema: "public", table: "messages" },
+      payload => {
+        loadMessages(); // refresh chat instantly
+      }
+    )
+    .subscribe();
 }
