@@ -88,10 +88,11 @@ if (btn) btn.style.display = "none";
 async function loadProducts() {
   const { data, error } = await supabaseClient.from("products").select("*");
 
-  if (error) {
-    console.log("Error loading products:", error);
-    return;
-  }
+if (error) {
+  console.error("Send error:", error);
+  alert(error.message);
+  return;
+}
 
   const container = document.getElementById("product-list");
   container.innerHTML = "";
@@ -310,7 +311,9 @@ function subscribeToChat() {
         loadMessages(); // refresh chat instantly
       }
     )
-    .subscribe();
+   .subscribe((status) => {
+  console.log("Realtime status:", status);
+});
 }
 
 // ==========================
