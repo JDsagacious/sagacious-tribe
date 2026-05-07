@@ -23,10 +23,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // ✅ INIT PI PROPERLY
   if (window.Pi) {
-    Pi.init({
-      version: "2.0",
-      sandbox: true
-    });
+   Pi.init({
+  version: "2.0",
+  sandbox: false
+});
     console.log("Pi initialized (SANDBOX MODE)");
   } else {
     console.log("Pi SDK NOT loaded");
