@@ -45,7 +45,8 @@ document.addEventListener("DOMContentLoaded", function () {
   loadPosts();
   loadProducts();
   loadReports();
-
+  
+loadGroups();
   loadMessages();     // load initial chat
 subscribeToChat();  // enable real-time
   
@@ -310,4 +311,96 @@ function subscribeToChat() {
       }
     )
     .subscribe();
+}
+
+// ==========================
+// GROUP SYSTEM
+// ==========================
+// LOAD GROUPS
+async function loadGroups() {
+  const { data, error } = await supabaseClient
+    .from("groups")
+    .select("*")
+    .order("created_at", { ascending: false });
+
+  if (error) {
+    console.log("Error loading groups:", error);
+    return;
+  }
+
+  const container = document.getElementById("group-list");
+  if (!container) return;
+
+  container.innerHTML = "";
+
+  data.forEach(g => {
+    const div = document.createElement("div");
+    div.className = "card";
+
+    div.innerHTML = `
+      <h4>${g.name}</h4>
+      <small>👤 ${g.creator}</small>
+      <button onclick="joinGroup(${g.id}, '${g.name}')">Join</button>
+    `;
+
+    container.appendChild(div);
+  });
+}
+
+// CREATE GROUP
+async function createGroup() {
+  const input = document.getElementById("group-name");
+  if (!input) return;
+
+  const name = input.value.trim();
+  if (!name) return;
+
+  const creator = localStorage.getItem("pi_user") || "Anonymous";
+
+  const { error } = await supabaseClient
+    .from("groups")
+    .insert([{ name, creator }]);
+
+  if (error) {
+    console.log("Create group error:", error);
+    return;
+  }
+
+  input.value = "";
+  loadGroups();
+}
+
+// JOIN GROUP
+async function joinGroup(groupId, groupName) {
+  const username = localStorage.getItem("pi_user") || "Anonymous";
+
+ const { error } = await supabaseClient
+  .from("group_members")
+  .insert([{ group_id: groupId, username }]);
+
+if (error) {
+  console.log("Join group error:", error);
+  return;
+}
+
+  const roomSelect = document.getElementById("room");
+  if (!roomSelect) return;
+
+  // prevent duplicate option
+  const existing = [...roomSelect.options].find(
+    option => option.value === "group_" + groupId
+  );
+
+  if (!existing) {
+    const option = document.createElement("option");
+
+    option.value = "group_" + groupId;
+    option.text = "👥 " + groupName;
+
+    roomSelect.appendChild(option);
+  }
+
+  roomSelect.value = "group_" + groupId;
+
+  loadMessages();
 }
