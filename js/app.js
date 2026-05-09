@@ -1,7 +1,7 @@
 console.log("JS LOADED");
 
 const SUPABASE_URL = "https://gbgmcncsbrtfiaephfhf.supabase.co";
-const SUPABASE_KEY = "sb_publishable_28L5eJ-sNCMTCP-iQ57wRw_5JjA0wVj";
+const SUPABASE_KEY = "PASTE_ANON_PUBLIC_KEY_HERE";
 
 const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
