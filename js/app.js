@@ -262,7 +262,10 @@ box.innerHTML = "";
 
     div.innerHTML = `
       <p>${msg.message}</p>
-      <small>👤 ${msg.username}</small>
+     <small>
+👤 ${msg.username} •
+${new Date(msg.created_at).toLocaleTimeString()}
+</small>
     `;
 
     box.appendChild(div);
