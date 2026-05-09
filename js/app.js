@@ -1,7 +1,8 @@
 console.log("JS LOADED");
 
 const SUPABASE_URL = "https://gbgmcncsbrtfiaephfhf.supabase.co";
-const SUPABASE_KEY = "PASTE_ANON_PUBLIC_KEY_HERE";
+
+const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdiZ21jbmNzYnJ0ZmlhZXBoZmhmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU2MDYyNzgsImV4cCI6MjA5MTE4MjI3OH0.-CspeTCz2VKtrjqgg7G1iuaqdA3sF_Eg09fBVTKQ5GM";
 
 const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
