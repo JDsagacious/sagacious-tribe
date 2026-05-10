@@ -1,5 +1,4 @@
 console.log("JS LOADED");
-alert("APP JS LOADED");
 
 const SUPABASE_URL = "https://gbgmcncsbrtfiaephfhf.supabase.co";
 
@@ -25,11 +24,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // ✅ INIT PI PROPERLY
   if (window.Pi) {
-   Pi.init({
+ Pi.init({
   version: "2.0",
-  sandbox: false
+  sandbox: true
 });
-    console.log("Pi initialized (SANDBOX MODE)");
+   console.log("Pi initialized (PRODUCTION MODE)");
   } else {
     console.log("Pi SDK NOT loaded");
   }
@@ -91,14 +90,16 @@ async function loadProducts() {
   const { data, error } = await supabaseClient.from("products").select("*");
 
 if (error) {
-  console.error("Send error:", error);
+  console.error("Load products error:", error);
   alert(error.message);
   return;
 }
 
-  const container = document.getElementById("product-list");
-  container.innerHTML = "";
+ const container = document.getElementById("product-list");
+if (!container) return;
 
+container.innerHTML = "";
+  
   data.forEach(p => {
     const div = document.createElement("div");
     div.className = "card";
@@ -143,9 +144,11 @@ async function loadReports() {
     return;
   }
 
-  const container = document.getElementById("report-list");
-  container.innerHTML = "";
+ const container = document.getElementById("report-list");
+if (!container) return;
 
+container.innerHTML = "";
+  
   data.forEach(r => {
     const div = document.createElement("div");
     div.className = "card";
@@ -192,9 +195,11 @@ async function loadPosts() {
     return;
   }
 
-  const container = document.getElementById("post-list");
-  container.innerHTML = "";
+ const container = document.getElementById("post-list");
+if (!container) return;
 
+container.innerHTML = "";
+  
   data.forEach(p => {
     const div = document.createElement("div");
     div.className = "card";
@@ -348,7 +353,9 @@ async function loadGroups() {
     div.innerHTML = `
       <h4>${g.name}</h4>
       <small>👤 ${g.creator}</small>
-      <button onclick="joinGroup(${g.id}, '${g.name}')">Join</button>
+      <button onclick='joinGroup(${g.id}, ${JSON.stringify(g.name)})'>
+  Join
+</button>
     `;
 
     container.appendChild(div);
