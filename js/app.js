@@ -29,9 +29,9 @@ Pi.init({
   sandbox: true
 });
     
-   Pi.authenticateScopes = ['username'];
+  Pi.authenticate(['username']);
     
-   console.log("Pi initialized (PRODUCTION MODE)");
+   console.log("Pi initialized (SANDBOX MODE)");
   } else {
     console.log("Pi SDK NOT loaded");
   }
@@ -51,8 +51,9 @@ Pi.init({
   loadReports();
   
 loadGroups();
-  loadMessages();     // load initial chat
-subscribeToChat();  // enable real-time
+loadJoinedGroups();
+loadMessages();
+subscribeToChat();
   
 });
 
@@ -363,6 +364,57 @@ async function loadGroups() {
 
     container.appendChild(div);
   });
+}
+
+// LOAD JOINED GROUPS
+async function loadJoinedGroups() {
+
+  const username = localStorage.getItem("pi_user");
+
+  if (!username) return;
+
+  const { data, error } = await supabaseClient
+    .from("group_members")
+    .select(`
+      group_id,
+      groups (
+        id,
+        name
+      )
+    `)
+    .eq("username", username);
+
+  if (error) {
+    console.log("Load joined groups error:", error);
+    return;
+  }
+
+  const roomSelect = document.getElementById("room");
+
+  if (!roomSelect) return;
+
+  data.forEach(member => {
+
+    const group = member.groups;
+
+    if (!group) return;
+
+    const existing = [...roomSelect.options].find(
+      option => option.value === "group_" + group.id
+    );
+
+    if (!existing) {
+
+      const option = document.createElement("option");
+
+      option.value = "group_" + group.id;
+      option.text = "👥 " + group.name;
+
+      roomSelect.appendChild(option);
+    }
+
+  });
+
 }
 
 // CREATE GROUP
