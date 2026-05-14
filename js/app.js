@@ -1,7 +1,5 @@
 console.log("JS LOADED");
 
-localStorage.clear();
-
 const SUPABASE_URL = "https://gbgmcncsbrtfiaephfhf.supabase.co";
 
 const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdiZ21jbmNzYnJ0ZmlhZXBoZmhmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU2MDYyNzgsImV4cCI6MjA5MTE4MjI3OH0.-CspeTCz2VKtrjqgg7G1iuaqdA3sF_Eg09fBVTKQ5GM";
@@ -22,6 +20,8 @@ let userElem;
 // INIT (FIXED)
 document.addEventListener("DOMContentLoaded", function () {
 
+initPi();
+  
 localStorage.removeItem("pi_user");
   
   userElem = document.getElementById("user");
@@ -46,6 +46,30 @@ loadMessages();
 subscribeToChat();
   
 });
+
+async function initPi() {
+
+  if (!window.Pi) {
+    console.log("Pi SDK NOT loaded");
+    return;
+  }
+
+  try {
+
+    await window.Pi.init({
+      version: "2.0",
+      sandbox: true
+    });
+
+    console.log("Pi initialized successfully");
+
+  } catch (err) {
+
+    console.log("Pi init error:", err);
+
+  }
+
+}
 
 // LOGIN
 async function loginWithPi() {
