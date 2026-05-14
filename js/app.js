@@ -20,6 +20,8 @@ let userElem;
 // INIT (FIXED)
 document.addEventListener("DOMContentLoaded", function () {
 
+localStorage.removeItem("pi_user");
+  
   userElem = document.getElementById("user");
 
   // ✅ INIT PI PROPERLY
