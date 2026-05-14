@@ -7,6 +7,15 @@
   <!-- Pi SDK -->
   <script src="https://sdk.minepi.com/pi-sdk.js"></script>
 
+<script type="module">
+  await Pi.init({
+    version: "2.0",
+    sandbox: true
+  });
+
+  console.log("Pi SDK initialized");
+</script>
+
   <!-- Supabase -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
