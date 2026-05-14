@@ -24,20 +24,6 @@ localStorage.removeItem("pi_user");
   
   userElem = document.getElementById("user");
 
-  // ✅ INIT PI PROPERLY
-  if (window.Pi) {
-Pi.init({
-  version: "2.0",
-  sandbox: true
-});
-    
-  Pi.authenticate(['username']);
-    
-   console.log("Pi initialized (SANDBOX MODE)");
-  } else {
-    console.log("Pi SDK NOT loaded");
-  }
-
   let piUser = localStorage.getItem("pi_user");
   if (piUser) {
   userElem.innerText = "👤 " + piUser;
