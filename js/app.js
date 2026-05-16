@@ -232,9 +232,11 @@ container.innerHTML = "";
 
   <br>
 
-  <button onclick="deleteMessage(${msg.id})">
-    Delete
-  </button>
+ ${
+  msg.username === localStorage.getItem("pi_user")
+    ? `<button onclick="deleteMessage(${msg.id})">Delete</button>`
+    : ""
+}
 `;
 
     container.appendChild(div);
