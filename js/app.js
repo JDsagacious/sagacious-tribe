@@ -222,10 +222,20 @@ container.innerHTML = "";
     const div = document.createElement("div");
     div.className = "card";
 
-    div.innerHTML = `
-      <p>${p.content}</p>
-      <small>👤 ${p.username} • ${new Date(p.created_at).toLocaleString()}</small>
-    `;
+   div.innerHTML = `
+  <p>${msg.message}</p>
+
+  <small>
+    👤 ${msg.username} •
+    ${new Date(msg.created_at).toLocaleTimeString()}
+  </small>
+
+  <br>
+
+  <button onclick="deleteMessage(${msg.id})">
+    Delete
+  </button>
+`;
 
     container.appendChild(div);
   });
