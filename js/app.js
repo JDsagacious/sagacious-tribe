@@ -224,14 +224,20 @@ async function loadPosts() {
 
     div.className = "card";
 
-    div.innerHTML = `
-      <p>${p.content}</p>
+   div.innerHTML = `
+  <p>${p.content}</p>
 
-      <small>
-        👤 ${p.username} •
-        ${new Date(p.created_at).toLocaleString()}
-      </small>
-    `;
+  <small>
+    👤 ${p.username} •
+    ${new Date(p.created_at).toLocaleString()}
+  </small>
+
+  <br><br>
+
+  <button onclick="likePost(${p.id}, ${p.likes || 0})">
+    ❤️ Like (${p.likes || 0})
+  </button>
+`;
 
     container.appendChild(div);
 
@@ -267,6 +273,23 @@ async function addPost() {
 
   loadPosts();
 
+}
+
+async function likePost(id, currentLikes) {
+
+  const { error } = await supabaseClient
+    .from("posts")
+    .update({
+      likes: currentLikes + 1
+    })
+    .eq("id", id);
+
+  if (error) {
+    console.log("Like error:", error);
+    return;
+  }
+
+  loadPosts();
 }
 
 // ==========================
