@@ -22,9 +22,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 initPi();
   
-localStorage.removeItem("pi_user");
-  
-  userElem = document.getElementById("user");
+   userElem = document.getElementById("user");
 
   let piUser = localStorage.getItem("pi_user");
   if (piUser) {
@@ -203,6 +201,7 @@ async function addReport() {
 // ==========================
 
 async function loadPosts() {
+
   const { data, error } = await supabaseClient
     .from("posts")
     .select("*")
@@ -213,45 +212,47 @@ async function loadPosts() {
     return;
   }
 
- const container = document.getElementById("post-list");
-if (!container) return;
+  const container = document.getElementById("post-list");
 
-container.innerHTML = "";
-  
+  if (!container) return;
+
+  container.innerHTML = "";
+
   data.forEach(p => {
+
     const div = document.createElement("div");
+
     div.className = "card";
 
-   div.innerHTML = `
-  <p>${msg.message}</p>
+    div.innerHTML = `
+      <p>${p.content}</p>
 
-  <small>
-    👤 ${msg.username} •
-    ${new Date(msg.created_at).toLocaleTimeString()}
-  </small>
-
-  <br>
-
- ${
-  msg.username === localStorage.getItem("pi_user")
-    ? `<button onclick="deleteMessage(${msg.id})">Delete</button>`
-    : ""
-}
-`;
+      <small>
+        👤 ${p.username} •
+        ${new Date(p.created_at).toLocaleString()}
+      </small>
+    `;
 
     container.appendChild(div);
+
   });
+
 }
 
 async function addPost() {
- const content = document.getElementById("post-content").value.trim();
+
+  const content = document
+    .getElementById("post-content")
+    .value
+    .trim();
 
   if (!content) {
     alert("Write something first");
     return;
   }
 
-  const username = localStorage.getItem("pi_user") || "Anonymous";
+  const username =
+    localStorage.getItem("pi_user") || "Anonymous";
 
   const { error } = await supabaseClient
     .from("posts")
@@ -263,7 +264,9 @@ async function addPost() {
   }
 
   document.getElementById("post-content").value = "";
+
   loadPosts();
+
 }
 
 // ==========================
@@ -297,13 +300,30 @@ box.innerHTML = "";
     const div = document.createElement("div");
     div.className = "card";
 
-    div.innerHTML = `
-      <p>${msg.message}</p>
-     <small>
-👤 ${msg.username} •
-${new Date(msg.created_at).toLocaleTimeString()}
-</small>
-    `;
+   div.innerHTML = `
+  <p>${msg.message}</p>
+
+  <small>
+    👤 ${msg.username} •
+    ${new Date(msg.created_at).toLocaleTimeString()}
+  </small>
+
+  <br>
+
+  ${
+    msg.username === localStorage.getItem("pi_user")
+      ? `
+        <button onclick="editMessage(${msg.id}, ${JSON.stringify(msg.message)})">
+          Edit
+        </button>
+
+        <button onclick="deleteMessage(${msg.id})">
+          Delete
+        </button>
+      `
+      : ""
+  }
+`;
 
     box.appendChild(div);
   });
@@ -338,6 +358,40 @@ const room = roomSelect.value;
 
  input.value = "";
 loadMessages(); // instant update
+}
+
+async function deleteMessage(id) {
+
+  const { error } = await supabaseClient
+    .from("messages")
+    .delete()
+    .eq("id", id);
+
+  if (error) {
+    console.log(error);
+    return;
+  }
+
+  loadMessages();
+}
+
+async function editMessage(id, oldMessage) {
+
+  const newMessage = prompt("Edit message:", oldMessage);
+
+  if (!newMessage) return;
+
+  const { error } = await supabaseClient
+    .from("messages")
+    .update({ message: newMessage })
+    .eq("id", id);
+
+  if (error) {
+    console.log(error);
+    return;
+  }
+
+  loadMessages();
 }
 
 // REAL-TIME SUBSCRIPTION
