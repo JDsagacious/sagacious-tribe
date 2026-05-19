@@ -324,7 +324,13 @@ box.innerHTML = "";
     div.className = "card";
 
    div.innerHTML = `
-  <p>${msg.message}</p>
+  ${
+  msg.reply_to
+    ? `<small>↪ Replying to message #${msg.reply_to}</small>`
+    : ""
+}
+
+<p>${msg.message}</p>
 
   <small>
     👤 ${msg.username} •
@@ -333,9 +339,9 @@ box.innerHTML = "";
 
   <br>
 
-  ${
-    msg.username === localStorage.getItem("pi_user")
-      ? `
+ ${
+  msg.username === localStorage.getItem("pi_user")
+    ? `
         <button onclick="editMessage(${msg.id}, ${JSON.stringify(msg.message)})">
           Edit
         </button>
@@ -343,9 +349,17 @@ box.innerHTML = "";
         <button onclick="deleteMessage(${msg.id})">
           Delete
         </button>
+
+        <button onclick="replyToMessage(${msg.id})">
+          Reply
+        </button>
       `
-      : ""
-  }
+    : `
+        <button onclick="replyToMessage(${msg.id})">
+          Reply
+        </button>
+      `
+}
 `;
 
     box.appendChild(div);
@@ -369,18 +383,29 @@ const room = roomSelect.value;
   if (!message) return;
 
   const username = localStorage.getItem("pi_user") || "Anonymous";
-
+  
+const replyTo = input.dataset.replyTo || null;
+  
   const { error } = await supabaseClient
     .from("messages")
-    .insert([{ message, username, room }]);
+    .insert([{
+  message,
+  username,
+  room,
+  reply_to: replyTo
+}]);
 
   if (error) {
     console.log("Send error:", error);
     return;
   }
 
- input.value = "";
-loadMessages(); // instant update
+input.value = "";
+
+delete input.dataset.replyTo;
+
+loadMessages();
+
 }
 
 async function deleteMessage(id) {
@@ -415,6 +440,20 @@ async function editMessage(id, oldMessage) {
   }
 
   loadMessages();
+}
+
+async function replyToMessage(id) {
+
+  const input = document.getElementById("message-input");
+
+  if (!input) return;
+
+  input.value = `Replying to #${id}: `;
+
+  input.focus();
+
+  input.dataset.replyTo = id;
+
 }
 
 // REAL-TIME SUBSCRIPTION
