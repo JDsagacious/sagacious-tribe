@@ -224,15 +224,28 @@ async function loadPosts() {
 
     div.className = "card";
 
-   div.innerHTML = `
+  div.innerHTML = `
+  <div style="display:flex;align-items:center;gap:10px;">
+
+    <img
+      src="${p.avatar}"
+      width="40"
+      height="40"
+      style="border-radius:50%;"
+    >
+
+    <div>
+      <small>
+        👤 ${p.username}<br>
+        ${new Date(p.created_at).toLocaleString()}
+      </small>
+    </div>
+
+  </div>
+
   <p>${p.content}</p>
 
-  <small>
-    👤 ${p.username} •
-    ${new Date(p.created_at).toLocaleString()}
-  </small>
-
-  <br><br>
+  <br>
 
   <button onclick="likePost(${p.id}, ${p.likes || 0})">
     ❤️ Like (${p.likes || 0})
@@ -260,9 +273,16 @@ async function addPost() {
   const username =
     localStorage.getItem("pi_user") || "Anonymous";
 
+  const avatar =
+  `https://ui-avatars.com/api/?name=${username}&background=random`;
+
   const { error } = await supabaseClient
     .from("posts")
-    .insert([{ content, username }]);
+    .insert([{
+  content,
+  username,
+  avatar
+}]);
 
   if (error) {
     console.log("Insert error:", error);
@@ -330,6 +350,24 @@ box.innerHTML = "";
     : ""
 }
 
+<div style="display:flex;align-items:center;gap:10px;">
+
+  <img
+    src="${msg.avatar}"
+    width="35"
+    height="35"
+    style="border-radius:50%;"
+  >
+
+  <div>
+    <small>
+      👤 ${msg.username} •
+      ${new Date(msg.created_at).toLocaleTimeString()}
+    </small>
+  </div>
+
+</div>
+
 <p>${msg.message}</p>
 
   <small>
@@ -383,14 +421,18 @@ const room = roomSelect.value;
   if (!message) return;
 
   const username = localStorage.getItem("pi_user") || "Anonymous";
+
+  const avatar =
+  `https://ui-avatars.com/api/?name=${username}&background=random`;
   
 const replyTo = input.dataset.replyTo || null;
   
   const { error } = await supabaseClient
     .from("messages")
-    .insert([{
+ .insert([{
   message,
   username,
+  avatar,
   room,
   reply_to: replyTo
 }]);
