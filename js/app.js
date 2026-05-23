@@ -243,7 +243,23 @@ async function loadPosts() {
 
   </div>
 
-  <p>${p.content}</p>
+ <p>${p.content}</p>
+
+${
+  p.image
+    ? `
+      <img
+        src="${p.image}"
+        style="
+          width:100%;
+          max-width:400px;
+          border-radius:10px;
+          margin-top:10px;
+        "
+      >
+    `
+    : ""
+}
 
   <br>
 
