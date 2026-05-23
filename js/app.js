@@ -265,8 +265,11 @@ async function addPost() {
     .value
     .trim();
 
-  if (!content) {
-    alert("Write something first");
+  const imageFile =
+    document.getElementById("post-image").files[0];
+
+  if (!content && !imageFile) {
+    alert("Write something or select image");
     return;
   }
 
@@ -274,15 +277,44 @@ async function addPost() {
     localStorage.getItem("pi_user") || "Anonymous";
 
   const avatar =
-  `https://ui-avatars.com/api/?name=${username}&background=random`;
+    `https://ui-avatars.com/api/?name=${username}&background=random`;
 
+  let imageUrl = null;
+
+  // UPLOAD IMAGE
+  if (imageFile) {
+
+    const fileName =
+      Date.now() + "_" + imageFile.name;
+
+    const { error: uploadError } =
+      await supabaseClient.storage
+        .from("tribe-images")
+        .upload(fileName, imageFile);
+
+    if (uploadError) {
+      console.log("Upload error:", uploadError);
+      return;
+    }
+
+    const { data } =
+      supabaseClient.storage
+        .from("tribe-images")
+        .getPublicUrl(fileName);
+
+    imageUrl = data.publicUrl;
+
+  }
+
+  // SAVE POST
   const { error } = await supabaseClient
     .from("posts")
     .insert([{
-  content,
-  username,
-  avatar
-}]);
+      content,
+      username,
+      avatar,
+      image: imageUrl
+    }]);
 
   if (error) {
     console.log("Insert error:", error);
@@ -290,6 +322,7 @@ async function addPost() {
   }
 
   document.getElementById("post-content").value = "";
+  document.getElementById("post-image").value = "";
 
   loadPosts();
 
