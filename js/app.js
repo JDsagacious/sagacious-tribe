@@ -500,18 +500,32 @@ async function replyToMessage(id) {
 
 // REAL-TIME SUBSCRIPTION
 function subscribeToChat() {
+
   supabaseClient
     .channel("public:messages")
+
     .on(
       "postgres_changes",
-      { event: "INSERT", schema: "public", table: "messages" },
+      {
+        event: "*",
+        schema: "public",
+        table: "messages"
+      },
       payload => {
-        loadMessages(); // refresh chat instantly
+
+        console.log("Realtime change:", payload);
+
+        loadMessages();
+
       }
     )
-   .subscribe((status) => {
-  console.log("Realtime status:", status);
-});
+
+    .subscribe((status) => {
+
+      console.log("Realtime status:", status);
+
+    });
+
 }
 
 // ==========================
