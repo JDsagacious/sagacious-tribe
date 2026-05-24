@@ -329,7 +329,7 @@ async function addPost() {
       content,
       username,
       avatar,
-     image_url: imageUrl
+     image: imageUrl
     }]);
 
   if (error) {
