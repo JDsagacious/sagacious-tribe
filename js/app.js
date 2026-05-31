@@ -333,9 +333,10 @@ async function addPost() {
     }]);
 
   if (error) {
-    console.log("Insert error:", error);
-    return;
-  }
+  alert("Insert error: " + error.message);
+  console.log(error);
+  return;
+}
 
   document.getElementById("post-content").value = "";
   document.getElementById("post-image").value = "";
