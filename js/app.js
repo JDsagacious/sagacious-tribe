@@ -284,6 +284,9 @@ async function addPost() {
   const imageFile =
     document.getElementById("post-image").files[0];
 
+  alert("Content = [" + content + "]");
+  alert("Image = " + imageFile);
+
   if (!content && !imageFile) {
     alert("Write something or select image");
     return;
