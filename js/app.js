@@ -335,6 +335,9 @@ async function addPost() {
      image: imageUrl
     }]);
 
+alert("About to save post");
+console.log("imageUrl =", imageUrl);
+  
   if (error) {
   alert("Insert error: " + error.message);
   console.log(error);
