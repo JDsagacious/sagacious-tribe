@@ -323,8 +323,11 @@ async function addPost() {
     imageUrl = data.publicUrl;
 
   }
-
+  
   // SAVE POST
+
+alert("About to save post to Supabase");
+  
   const { error } = await supabaseClient
     .from("posts")
     .insert([{
