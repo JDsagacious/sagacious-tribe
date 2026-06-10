@@ -284,9 +284,7 @@ async function addPost() {
   const imageFile =
     document.getElementById("post-image").files[0];
 
-  alert("Content = [" + content + "]");
-  
-  if (!content && !imageFile) {
+     if (!content && !imageFile) {
     alert("Write something or select image");
     return;
   }
@@ -326,33 +324,28 @@ async function addPost() {
   
   // SAVE POST
 
-alert("About to save post to Supabase");
-  
-  const { error } = await supabaseClient
-    .from("posts")
-    .insert([{
-      content,
-      username,
-      avatar,
-     image: imageUrl
-    }]);
+const { error } = await supabaseClient
+  .from("posts")
+  .insert([{
+    content,
+    username,
+    avatar,
+    image: imageUrl
+  }]);
 
-alert("Insert Error = " + JSON.stringify(error));
-console.log(error);
-  
-alert("About to save post");
-console.log("imageUrl =", imageUrl);
-  
-  if (error) {
+if (error) {
   alert("Insert error: " + error.message);
   console.log(error);
   return;
 }
 
-  document.getElementById("post-content").value = "";
-  document.getElementById("post-image").value = "";
+console.log("Post saved");
+console.log("imageUrl =", imageUrl);
 
-  loadPosts();
+document.getElementById("post-content").value = "";
+document.getElementById("post-image").value = "";
+
+loadPosts();
 
 }
 
