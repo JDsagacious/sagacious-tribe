@@ -306,15 +306,18 @@ alert("imageFile = " + imageFile);
     const fileName =
       Date.now() + "_" + imageFile.name;
 
-    const { error: uploadError } =
-      await supabaseClient.storage
-        .from("tribe-images")
-        .upload(fileName, imageFile);
+   const { error: uploadError } =
+  await supabaseClient.storage
+    .from("tribe-images")
+    .upload(fileName, imageFile);
 
-    if (uploadError) {
-      console.log("Upload error:", uploadError);
-      return;
-    }
+if (uploadError) {
+  alert("Upload error: " + uploadError.message);
+  console.log(uploadError);
+  return;
+}
+
+alert("Upload successful");
 
     const { data } =
       supabaseClient.storage
