@@ -301,6 +301,9 @@ alert("imageFile = " + imageFile);
   let imageUrl = null;
 
   // UPLOAD IMAGE
+
+alert("Before upload block");
+  
   if (imageFile) {
 
     const fileName =
