@@ -285,7 +285,6 @@ async function addPost() {
     document.getElementById("post-image").files[0];
 
   console.log("imageFile =", imageFile);
-alert("NEW VERSION LOADED");
 alert("imageFile = " + imageFile);
 
      if (!content && !imageFile) {
