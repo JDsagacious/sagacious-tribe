@@ -310,10 +310,13 @@ alert("Before upload block");
     const fileName =
       Date.now() + "_" + imageFile.name;
 
-   const { error: uploadError } =
+  const { error: uploadError } =
   await supabaseClient.storage
     .from("tribe-images")
-    .upload(fileName, imageFile);
+    .upload(fileName, imageFile, {
+      cacheControl: "3600",
+      upsert: false
+    });
 
 if (uploadError) {
   alert("Upload error: " + uploadError.message);
