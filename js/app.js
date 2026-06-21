@@ -284,10 +284,7 @@ async function addPost() {
   const imageFile =
     document.getElementById("post-image").files[0];
 
-  console.log("imageFile =", imageFile);
-alert("imageFile = " + imageFile);
-
-     if (!content && !imageFile) {
+       if (!content && !imageFile) {
     alert("Write something or select image");
     return;
   }
@@ -302,8 +299,6 @@ alert("imageFile = " + imageFile);
 
   // UPLOAD IMAGE
 
-alert("Before upload block");
-  
   if (imageFile) {
 
     const fileName =
@@ -322,8 +317,6 @@ if (uploadError) {
   console.log(uploadError);
   return;
 }
-
-alert("Upload successful");
 
     const { data } =
       supabaseClient.storage
@@ -350,9 +343,6 @@ if (error) {
   console.log(error);
   return;
 }
-
-console.log("Post saved");
-console.log("imageUrl =", imageUrl);
 
 document.getElementById("post-content").value = "";
 document.getElementById("post-image").value = "";
