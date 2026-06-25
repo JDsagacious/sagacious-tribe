@@ -378,6 +378,27 @@ async function likePost(id, currentLikes) {
   loadPosts();
 }
 
+async function deletePost(id) {
+
+  const confirmDelete = confirm("Delete this post?");
+
+  if (!confirmDelete) return;
+
+  const { error } = await supabaseClient
+    .from("posts")
+    .delete()
+    .eq("id", id);
+
+  if (error) {
+    console.log("Delete error:", error);
+    alert("Unable to delete post.");
+    return;
+  }
+
+  loadPosts();
+
+}
+
 // ==========================
 // TRIBE TALK (REAL-TIME CHAT)
 // ==========================
