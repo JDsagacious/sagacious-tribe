@@ -390,13 +390,14 @@ async function deletePost(id) {
     .eq("id", id);
 
   if (error) {
-    console.log("Delete error:", error);
-    alert("Unable to delete post.");
+    alert("Delete error: " + error.message);
+    console.log(error);
     return;
   }
 
-  loadPosts();
+  alert("Post deleted successfully");
 
+  loadPosts();
 }
 
 // ==========================
