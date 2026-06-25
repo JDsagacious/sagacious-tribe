@@ -264,8 +264,18 @@ ${
   <br>
 
   <button onclick="likePost(${p.id}, ${p.likes || 0})">
-    ❤️ Like (${p.likes || 0})
-  </button>
+  ❤️ Like (${p.likes || 0})
+</button>
+
+${
+  p.username === localStorage.getItem("pi_user")
+    ? `
+      <button onclick="deletePost(${p.id})">
+        🗑️ Delete
+      </button>
+    `
+    : ""
+}
 `;
 
     container.appendChild(div);
