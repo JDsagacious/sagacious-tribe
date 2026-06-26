@@ -384,10 +384,13 @@ async function deletePost(id) {
 
   if (!confirmDelete) return;
 
-  const { error } = await supabaseClient
-    .from("posts")
-    .delete()
-    .eq("id", id);
+const { data, error } = await supabaseClient
+  .from("posts")
+  .delete()
+  .eq("id", id)
+  .select();
+
+console.log("Deleted rows:", data);
 
   if (error) {
     alert("Delete error: " + error.message);
