@@ -390,6 +390,7 @@ const { data, error } = await supabaseClient
   .eq("id", id)
   .select();
 
+alert("Deleted rows = " + JSON.stringify(data));
 console.log("Deleted rows:", data);
 
   if (error) {
