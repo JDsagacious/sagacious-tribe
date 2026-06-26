@@ -263,9 +263,23 @@ ${
 
   <br>
 
-  <button onclick="likePost(${p.id}, ${p.likes || 0})">
+<button onclick="likePost(${p.id}, ${p.likes || 0})">
   ❤️ Like (${p.likes || 0})
 </button>
+
+${
+  p.username === (localStorage.getItem("pi_user") || "Anonymous")
+    ? `
+      <button onclick="editPost(${p.id}, ${JSON.stringify(p.content)})">
+        ✏️ Edit
+      </button>
+
+      <button onclick="deletePost(${p.id})">
+        🗑 Delete
+      </button>
+    `
+    : ""
+}
 
 ${
   p.username === localStorage.getItem("pi_user")
