@@ -281,15 +281,6 @@ ${
     : ""
 }
 
-${
-  p.username === localStorage.getItem("pi_user")
-    ? `
-      <button onclick="deletePost(${p.id})">
-        🗑️ Delete
-      </button>
-    `
-    : ""
-}
 `;
 
     container.appendChild(div);
