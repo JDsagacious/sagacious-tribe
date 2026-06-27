@@ -395,9 +395,6 @@ const { data, error } = await supabaseClient
   .eq("id", id)
   .select();
 
-alert("Deleted rows = " + JSON.stringify(data));
-console.log("Deleted rows:", data);
-
   if (error) {
     alert("Delete error: " + error.message);
     console.log(error);
@@ -410,10 +407,7 @@ console.log("Deleted rows:", data);
 }
 
 async function editPost(id, oldContent) {
-
-console.log("Edit ID:", id);
-alert("Edit ID = " + id);
-  
+ 
   const newContent = prompt("Edit your post:", oldContent);
 
   if (newContent === null) return;
@@ -430,9 +424,6 @@ alert("Edit ID = " + id);
   })
   .eq("id", id)
   .select();
-
-console.log("Updated rows:", data);
-alert("Updated rows = " + JSON.stringify(data));
 
   if (error) {
     alert("Edit error: " + error.message);
