@@ -423,12 +423,16 @@ alert("Edit ID = " + id);
     return;
   }
 
-  const { error } = await supabaseClient
-    .from("posts")
-    .update({
-      content: newContent.trim()
-    })
-    .eq("id", id);
+  const { data, error } = await supabaseClient
+  .from("posts")
+  .update({
+    content: newContent.trim()
+  })
+  .eq("id", id)
+  .select();
+
+console.log("Updated rows:", data);
+alert("Updated rows = " + JSON.stringify(data));
 
   if (error) {
     alert("Edit error: " + error.message);
