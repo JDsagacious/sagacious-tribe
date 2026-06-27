@@ -411,6 +411,9 @@ console.log("Deleted rows:", data);
 
 async function editPost(id, oldContent) {
 
+console.log("Edit ID:", id);
+alert("Edit ID = " + id);
+  
   const newContent = prompt("Edit your post:", oldContent);
 
   if (newContent === null) return;
