@@ -409,6 +409,36 @@ console.log("Deleted rows:", data);
   loadPosts();
 }
 
+async function editPost(id, oldContent) {
+
+  const newContent = prompt("Edit your post:", oldContent);
+
+  if (newContent === null) return;
+
+  if (newContent.trim() === "") {
+    alert("Post cannot be empty.");
+    return;
+  }
+
+  const { error } = await supabaseClient
+    .from("posts")
+    .update({
+      content: newContent.trim()
+    })
+    .eq("id", id);
+
+  if (error) {
+    alert("Edit error: " + error.message);
+    console.log(error);
+    return;
+  }
+
+  alert("Post updated successfully");
+
+  loadPosts();
+
+}
+
 // ==========================
 // TRIBE TALK (REAL-TIME CHAT)
 // ==========================
