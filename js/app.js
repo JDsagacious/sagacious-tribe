@@ -270,7 +270,7 @@ ${
 ${
   p.username === (localStorage.getItem("pi_user") || "Anonymous")
     ? `
-      <button onclick="editPost(${p.id}, ${JSON.stringify(p.content)})">
+      <button onclick="editPost(${p.id}, \`${p.content}\`)">
         ✏️ Edit
       </button>
 
