@@ -456,6 +456,44 @@ async function editPost(id, oldContent) {
 
 }
 
+async function addComment(postId) {
+
+  const input = document.getElementById(`comment-input-${postId}`);
+
+  const comment = input.value.trim();
+
+  if (!comment) {
+    alert("Write a comment first.");
+    return;
+  }
+
+  const username =
+    localStorage.getItem("pi_user") || "Anonymous";
+
+  const avatar =
+    `https://ui-avatars.com/api/?name=${username}&background=random`;
+
+  const { error } = await supabaseClient
+    .from("comments")
+    .insert([{
+      post_id: postId,
+      username,
+      avatar,
+      comment
+    }]);
+
+  if (error) {
+    alert("Comment error: " + error.message);
+    console.log(error);
+    return;
+  }
+
+  input.value = "";
+
+  alert("Comment added successfully.");
+
+}
+
 // ==========================
 // TRIBE TALK (REAL-TIME CHAT)
 // ==========================
