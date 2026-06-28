@@ -283,8 +283,27 @@ ${
 
 `;
 
-    container.appendChild(div);
+div.innerHTML += `
+  <hr>
 
+  <div id="comments-${p.id}"></div>
+
+  <textarea
+    id="comment-input-${p.id}"
+    placeholder="Write a comment..."
+    rows="2"
+    style="width:100%;margin-top:10px;"
+  ></textarea>
+
+  <br>
+
+  <button onclick="addComment(${p.id})">
+    💬 Comment
+  </button>
+`;
+    
+    container.appendChild(div);
+    
   });
 
 }
