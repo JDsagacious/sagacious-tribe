@@ -536,6 +536,22 @@ async function loadComments(postId) {
 
         ${c.comment}
 
+<br><br>
+
+${
+  c.username === (localStorage.getItem("pi_user") || "Anonymous")
+    ? `
+      <button onclick="editComment(${c.id}, ${JSON.stringify(c.comment)})">
+        ✏️ Edit
+      </button>
+
+      <button onclick="deleteComment(${c.id}, ${postId})">
+        🗑 Delete
+      </button>
+    `
+    : ""
+}
+
       </div>
     `;
 
