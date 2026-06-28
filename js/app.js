@@ -303,6 +303,8 @@ div.innerHTML += `
 `;
     
     container.appendChild(div);
+
+loadComments(p.id);
     
   });
 
@@ -490,7 +492,54 @@ async function addComment(postId) {
 
   input.value = "";
 
-  alert("Comment added successfully.");
+loadComments(postId);
+
+}
+
+async function loadComments(postId) {
+
+  const container = document.getElementById(`comments-${postId}`);
+
+  if (!container) return;
+
+  const { data, error } = await supabaseClient
+    .from("comments")
+    .select("*")
+    .eq("post_id", postId)
+    .order("created_at", { ascending: true });
+
+  if (error) {
+    console.log(error);
+    return;
+  }
+
+  container.innerHTML = "";
+
+  data.forEach(c => {
+
+    container.innerHTML += `
+      <div style="
+        border-top:1px solid #ddd;
+        margin-top:8px;
+        padding-top:8px;
+      ">
+
+        <img
+          src="${c.avatar}"
+          width="30"
+          style="border-radius:50%;vertical-align:middle;"
+        >
+
+        <strong>${c.username}</strong>
+
+        <br>
+
+        ${c.comment}
+
+      </div>
+    `;
+
+  });
 
 }
 
