@@ -559,6 +559,36 @@ ${
 
 }
 
+async function editComment(id, oldComment) {
+
+  const newComment = prompt("Edit your comment:", oldComment);
+
+  if (newComment === null) return;
+
+  if (newComment.trim() === "") {
+    alert("Comment cannot be empty.");
+    return;
+  }
+
+  const { error } = await supabaseClient
+    .from("comments")
+    .update({
+      comment: newComment.trim()
+    })
+    .eq("id", id);
+
+  if (error) {
+    alert("Edit error: " + error.message);
+    console.log(error);
+    return;
+  }
+
+  alert("Comment updated successfully.");
+
+  loadPosts();
+
+}
+
 // ==========================
 // TRIBE TALK (REAL-TIME CHAT)
 // ==========================
