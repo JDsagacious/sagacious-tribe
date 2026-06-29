@@ -91,8 +91,13 @@ async function loginWithPi() {
   }
 
   try {
+
+    alert("About to call Pi.authenticate()");
+    
     const auth = await Pi.authenticate(['username']);
 
+alert("Pi.authenticate() returned successfully");
+    
     const username = auth.user.username;
 
     localStorage.setItem("pi_user", username);
