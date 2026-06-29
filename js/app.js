@@ -1,17 +1,5 @@
 console.log("JS LOADED");
 
-const savedUser = localStorage.getItem("pi_user");
-
-if (savedUser) {
-
-  userElem.innerText = "👤 " + savedUser;
-
-  const btn = document.getElementById("login-btn");
-
-  if (btn) btn.style.display = "none";
-
-}
-
 const SUPABASE_URL = "https://gbgmcncsbrtfiaephfhf.supabase.co";
 
 const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdiZ21jbmNzYnJ0ZmlhZXBoZmhmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU2MDYyNzgsImV4cCI6MjA5MTE4MjI3OH0.-CspeTCz2VKtrjqgg7G1iuaqdA3sF_Eg09fBVTKQ5GM";
@@ -81,42 +69,51 @@ async function initPi() {
 
 }
 
-// LOGIN
+// LOGIN WITH PI
 async function loginWithPi() {
+
   console.log("Login button clicked");
 
   if (!window.Pi) {
-    alert("Pi SDK not available");
+    alert("Pi SDK not available.");
     return;
   }
 
   try {
 
-    alert("About to call Pi.authenticate()");
-    
-    const auth = await Pi.authenticate(['username']);
+    console.log("Starting Pi authentication...");
 
-alert("Pi.authenticate() returned successfully");
-    
+    const auth = await window.Pi.authenticate(["username"]);
+
+    console.log("Authentication successful:", auth);
+
     const username = auth.user.username;
 
+    // Save username
     localStorage.setItem("pi_user", username);
-userElem.innerText = "👤 " + username;
 
-// ✅ HIDE LOGIN BUTTON AFTER LOGIN
-const btn = document.getElementById("login-btn");
-if (btn) btn.style.display = "none";
+    // Update UI
+    userElem = document.getElementById("user");
+    if (userElem) {
+      userElem.innerText = "👤 " + username;
+    }
 
-    console.log("Logged in as:", username);
+    // Hide Login button
+    const btn = document.getElementById("login-btn");
+    if (btn) {
+      btn.style.display = "none";
+    }
 
-catch (err) {
-  console.error("Pi Login Error:", err);
+    alert("Welcome " + username + "!");
 
-  alert(
-    "Login failed:\n\n" +
-    (err?.message || JSON.stringify(err))
-  );
-}
+  } catch (err) {
+
+    console.error("Pi Authentication Error:", err);
+
+    alert("Login failed.");
+
+  }
+
 }
 
 // ==========================
