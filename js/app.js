@@ -104,10 +104,14 @@ if (btn) btn.style.display = "none";
 
     console.log("Logged in as:", username);
 
-  } catch (err) {
-    console.log("Login failed", err);
-    alert("Login failed");
-  }
+catch (err) {
+  console.error("Pi Login Error:", err);
+
+  alert(
+    "Login failed:\n\n" +
+    (err?.message || JSON.stringify(err))
+  );
+}
 }
 
 // ==========================
