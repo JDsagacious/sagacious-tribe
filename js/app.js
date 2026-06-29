@@ -1,5 +1,17 @@
 console.log("JS LOADED");
 
+const savedUser = localStorage.getItem("pi_user");
+
+if (savedUser) {
+
+  userElem.innerText = "👤 " + savedUser;
+
+  const btn = document.getElementById("login-btn");
+
+  if (btn) btn.style.display = "none";
+
+}
+
 const SUPABASE_URL = "https://gbgmcncsbrtfiaephfhf.supabase.co";
 
 const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdiZ21jbmNzYnJ0ZmlhZXBoZmhmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU2MDYyNzgsImV4cCI6MjA5MTE4MjI3OH0.-CspeTCz2VKtrjqgg7G1iuaqdA3sF_Eg09fBVTKQ5GM";
@@ -586,6 +598,29 @@ async function editComment(id, oldComment) {
   alert("Comment updated successfully.");
 
   loadPosts();
+
+}
+
+async function deleteComment(id, postId) {
+
+  const confirmDelete = confirm("Delete this comment?");
+
+  if (!confirmDelete) return;
+
+  const { error } = await supabaseClient
+    .from("comments")
+    .delete()
+    .eq("id", id);
+
+  if (error) {
+    alert("Delete error: " + error.message);
+    console.log(error);
+    return;
+  }
+
+  alert("Comment deleted successfully.");
+
+  loadComments(postId);
 
 }
 
