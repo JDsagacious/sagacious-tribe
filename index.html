@@ -19,7 +19,19 @@
 
 <!-- USER -->
 <div class="user-bar">
-  <p id="user">Not logged in</p>
+
+  <span id="user">
+    Not logged in
+  </span>
+
+  <button
+      id="logout-btn"
+      onclick="logout()"
+      style="display:none;margin-left:10px;"
+  >
+      🚪 Logout
+  </button>
+
 </div>
 
 <!-- HEADER -->
@@ -38,7 +50,14 @@
 
 <!-- LOGIN -->
 <div class="center">
-  <button id="login-btn" onclick="loginWithPi()">Login with Pi</button>
+
+  <button
+    id="login-btn"
+    onclick="loginWithPi()"
+  >
+    Login with Pi
+  </button>
+
 </div>
 
 <!-- MODULES -->
