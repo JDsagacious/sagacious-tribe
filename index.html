@@ -46,6 +46,9 @@
   <button onclick="showModule('ecosaga')">🎧 EcoSaga</button>
   <button onclick="showModule('afrispice')">🛒 Afrispice</button>
   <button onclick="showModule('cyber')">🛡️ CyberGuardians</button>
+
+<button onclick="showModule('profile')">👤 Profile</button>
+  
 </div>
 
 <!-- LOGIN -->
@@ -131,6 +134,31 @@
   </div>
 
   <div id="report-list"></div>
+</div>
+
+<div id="profile" class="module">
+
+  <h2>👤 My Profile</h2>
+
+  <div class="card">
+
+    <input
+      type="text"
+      id="profile-fullname"
+      placeholder="Full Name"
+    >
+
+    <textarea
+      id="profile-bio"
+      placeholder="Tell the community about yourself..."
+    ></textarea>
+
+    <button onclick="saveProfile()">
+      💾 Save Profile
+    </button>
+
+  </div>
+
 </div>
 
 <!-- FOOTER -->
