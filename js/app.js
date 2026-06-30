@@ -98,11 +98,19 @@ async function loginWithPi() {
       userElem.innerText = "👤 " + username;
     }
 
-    // Hide Login button
-    const btn = document.getElementById("login-btn");
-    if (btn) {
-      btn.style.display = "none";
-    }
+// Hide Login button
+const btn = document.getElementById("login-btn");
+
+if (btn) {
+    btn.style.display = "none";
+}
+
+// Show Logout button
+const logoutBtn = document.getElementById("logout-btn");
+
+if (logoutBtn) {
+    logoutBtn.style.display = "inline-block";
+}
 
     alert("Welcome " + username + "!");
 
@@ -989,4 +997,40 @@ if (error) {
   roomSelect.value = "group_" + groupId;
 
   loadMessages();
+}
+
+// ==============================
+// LOGOUT
+// ==============================
+
+function logout() {
+
+    // Remove saved Pi user
+    localStorage.removeItem("pi_user");
+
+    // Reset user display
+    const userElem = document.getElementById("user");
+
+    if (userElem) {
+        userElem.innerText = "Not logged in";
+    }
+
+    // Show Login button
+    const loginBtn = document.getElementById("login-btn");
+
+    if (loginBtn) {
+        loginBtn.style.display = "inline-block";
+    }
+
+    // Hide Logout button
+    const logoutBtn = document.getElementById("logout-btn");
+
+    if (logoutBtn) {
+        logoutBtn.style.display = "none";
+    }
+
+    alert("Logged out successfully.");
+
+    location.reload();
+
 }
