@@ -92,6 +92,35 @@ async function loginWithPi() {
     // Save username
     localStorage.setItem("pi_user", username);
 
+// Check if profile already exists
+const { data: existingProfile } = await supabaseClient
+  .from("profiles")
+  .select("id")
+  .eq("username", username)
+  .maybeSingle();
+
+if (!existingProfile) {
+
+  const { error } = await supabaseClient
+    .from("profiles")
+    .insert([
+      {
+        username: username,
+        full_name: username,
+        bio: "",
+        avatar_url: "",
+        cover_url: ""
+      }
+    ]);
+
+  if (error) {
+    console.error("Profile creation error:", error);
+  } else {
+    console.log("Profile created successfully.");
+  }
+
+}
+    
     // Update UI
     userElem = document.getElementById("user");
     if (userElem) {
