@@ -31,8 +31,14 @@ initPi();
   // ✅ hide button if already logged in
   const btn = document.getElementById("login-btn");
   if (btn) btn.style.display = "none";
-}
 
+const logoutBtn = document.getElementById("logout-btn");
+if (logoutBtn) {
+    logoutBtn.style.display = "inline-block";
+}
+    
+}
+  
   showModule('tribe');
   loadPosts();
   loadProducts();
@@ -42,6 +48,8 @@ loadGroups();
 loadJoinedGroups();
 loadMessages();
 subscribeToChat();
+
+loadProfile();
   
 });
 
@@ -1061,5 +1069,69 @@ function logout() {
     alert("Logged out successfully.");
 
     location.reload();
+
+}
+
+// SAVE PROFILE
+async function saveProfile() {
+
+  const username = localStorage.getItem("pi_user");
+
+  if (!username) {
+    alert("Please login first.");
+    return;
+  }
+
+  const fullName = document
+    .getElementById("profile-fullname")
+    .value;
+
+  const bio = document
+    .getElementById("profile-bio")
+    .value;
+
+  const { error } = await supabaseClient
+    .from("profiles")
+    .update({
+      full_name: fullName,
+      bio: bio
+    })
+    .eq("username", username);
+
+  if (error) {
+    console.error(error);
+    alert("Profile update failed.");
+    return;
+  }
+
+  alert("✅ Profile updated successfully!");
+
+}
+
+// LOAD PROFILE
+async function loadProfile() {
+
+  const username = localStorage.getItem("pi_user");
+
+  if (!username) return;
+
+  const { data, error } = await supabaseClient
+    .from("profiles")
+    .select("*")
+    .eq("username", username)
+    .maybeSingle();
+
+  if (error) {
+    console.error(error);
+    return;
+  }
+
+  if (!data) return;
+
+  document.getElementById("profile-fullname").value =
+    data.full_name || "";
+
+  document.getElementById("profile-bio").value =
+    data.bio || "";
 
 }
