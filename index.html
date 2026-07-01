@@ -142,20 +142,43 @@
 
   <div class="card">
 
-    <input
-      type="text"
-      id="profile-fullname"
-      placeholder="Full Name"
-    >
+   <input
+  type="text"
+  id="profile-fullname"
+  placeholder="Full Name"
+>
 
-    <textarea
-      id="profile-bio"
-      placeholder="Tell the community about yourself..."
-    ></textarea>
+<textarea
+  id="profile-bio"
+  placeholder="Tell the community about yourself..."
+></textarea>
 
-    <button onclick="saveProfile()">
-      💾 Save Profile
-    </button>
+<input
+  type="file"
+  id="avatar-upload"
+  accept="image/*"
+>
+
+<button onclick="uploadAvatar()">
+  📷 Upload Avatar
+</button>
+
+<img
+  id="profile-avatar"
+  src=""
+  style="
+    width:120px;
+    height:120px;
+    border-radius:50%;
+    object-fit:cover;
+    display:block;
+    margin-top:15px;
+  "
+>
+
+<button onclick="saveProfile()">
+  💾 Save Profile
+</button>
 
   </div>
 
