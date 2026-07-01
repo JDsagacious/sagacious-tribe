@@ -1135,3 +1135,83 @@ async function loadProfile() {
     data.bio || "";
 
 }
+
+// UPLOAD AVATAR
+async function uploadAvatar() {
+
+  const username = localStorage.getItem("pi_user");
+
+  if (!username) {
+    alert("Please login first.");
+    return;
+  }
+
+  const input = document.getElementById("avatar-upload");
+
+  if (!input.files.length) {
+    alert("Please choose an image.");
+    return;
+  }
+
+  const file = input.files[0];
+
+  // Only images
+  if (!file.type.startsWith("image/")) {
+    alert("Please select an image file.");
+    return;
+  }
+
+  // Maximum 5MB
+  if (file.size > 5 * 1024 * 1024) {
+    alert("Image must be less than 5MB.");
+    return;
+  }
+
+  const extension = file.name.split(".").pop();
+
+  const fileName =
+    `${username}-${Date.now()}.${extension}`;
+
+  const filePath =
+    `avatars/${fileName}`;
+
+  const { error: uploadError } =
+    await supabaseClient.storage
+      .from("tribe-images")
+      .upload(filePath, file);
+
+  if (uploadError) {
+    console.error(uploadError);
+    alert("Upload failed.");
+    return;
+  }
+
+  const { data } =
+    supabaseClient.storage
+      .from("tribe-images")
+      .getPublicUrl(filePath);
+
+  const avatarUrl =
+    data.publicUrl;
+
+  const { error } =
+    await supabaseClient
+      .from("profiles")
+      .update({
+        avatar_url: avatarUrl
+      })
+      .eq("username", username);
+
+  if (error) {
+    console.error(error);
+    alert("Profile update failed.");
+    return;
+  }
+
+  document.getElementById(
+    "profile-avatar"
+  ).src = avatarUrl;
+
+  alert("✅ Avatar uploaded successfully!");
+
+}
