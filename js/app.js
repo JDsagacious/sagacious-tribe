@@ -1134,6 +1134,9 @@ async function loadProfile() {
   document.getElementById("profile-bio").value =
     data.bio || "";
 
+document.getElementById("profile-avatar").src =
+  profile.avatar_url || "";
+  
 }
 
 // UPLOAD AVATAR
