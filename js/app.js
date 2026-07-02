@@ -91,7 +91,13 @@ async function loginWithPi() {
 
     console.log("Starting Pi authentication...");
 
-    const auth = await window.Pi.authenticate(["username"]);
+    const auth = await window.Pi.authenticate(
+  ["username"],
+  function(payment) {
+    console.log("Incomplete payment:", payment);
+    return;
+  }
+);
 
     console.log("Authentication successful:", auth);
 
@@ -155,7 +161,7 @@ if (logoutBtn) {
 
     console.error("Pi Authentication Error:", err);
 
-    alert("Login failed.");
+    alert("Login failed: " + err.message);
 
   }
 
