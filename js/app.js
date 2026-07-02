@@ -157,13 +157,13 @@ if (logoutBtn) {
 
     alert("Welcome " + username + "!");
 
-  } catch (err) {
+ catch (err) {
 
-    console.error("Pi Authentication Error:", err);
+    console.error("FULL PI ERROR:", err);
 
-    alert("Login failed: " + err.message);
+    alert("Login failed:\n" + JSON.stringify(err));
 
-  }
+}
 
 }
 
