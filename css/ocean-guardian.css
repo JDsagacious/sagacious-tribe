@@ -131,3 +131,27 @@ body{
     font-weight:bold;
 
 }
+
+.bottle{
+
+    width:55px;
+
+    height:70px;
+
+    position:absolute;
+
+    cursor:pointer;
+
+    object-fit:contain;
+
+    transition:.2s;
+
+    user-select:none;
+
+}
+
+.bottle:hover{
+
+    transform:scale(1.15);
+
+}
