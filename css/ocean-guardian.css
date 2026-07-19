@@ -155,3 +155,39 @@ body{
     transform:scale(1.15);
 
 }
+
+.fish{
+
+    position:absolute;
+
+    width:120px;
+
+    left:-150px;
+
+    top:120px;
+
+    animation: swimFish 18s linear infinite;
+
+    pointer-events:none;
+
+}
+
+@keyframes swimFish{
+
+    0%{
+
+        left:-150px;
+
+        transform:scaleX(-1);
+
+    }
+
+    100%{
+
+        left:100%;
+
+        transform:scaleX(-1);
+
+    }
+
+}
