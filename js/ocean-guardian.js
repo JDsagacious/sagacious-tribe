@@ -1,5 +1,6 @@
 console.log("Ocean Guardian Loaded");
 
+const bubbleLayer = document.getElementById("bubbleLayer");
 const ocean = document.getElementById("ocean");
 const trashLayer = document.getElementById("trashLayer");
 const scoreText = document.getElementById("score");
@@ -36,9 +37,40 @@ function createBottle(){
 
         createBottle();
 
-    };
+        };
 
-trashLayer.appendChild(bottle);
+    trashLayer.appendChild(bottle);
+
+}
+
+    function createBubble(){
+
+    const bubble = document.createElement("div");
+
+    bubble.className = "bubble";
+
+    // Random horizontal position
+    bubble.style.left = Math.random() * 100 + "%";
+
+    // Random size
+    const size = 8 + Math.random() * 18;
+
+    bubble.style.width = size + "px";
+    bubble.style.height = size + "px";
+
+    // Random speed
+    const duration = 4 + Math.random() * 6;
+
+    bubble.style.animationDuration = duration + "s";
+
+    bubbleLayer.appendChild(bubble);
+
+    // Remove bubble after animation finishes
+    setTimeout(function(){
+
+        bubble.remove();
+
+    }, duration * 1000);
 
 }
 
@@ -86,3 +118,9 @@ startBtn.onclick = function(){
     alert("Mission Started!");
 
 };
+
+setInterval(function(){
+
+    createBubble();
+
+}, 500);

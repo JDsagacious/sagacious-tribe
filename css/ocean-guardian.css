@@ -16,6 +16,12 @@ body{
 
     background:linear-gradient(#66d9ff,#0088cc);
 
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+
+}
+
 }
 
 .game-header{
@@ -83,6 +89,8 @@ body{
 }
 
 .controls{
+
+    width:100%;
 
     text-align:center;
 
@@ -187,6 +195,53 @@ body{
         left:100%;
 
         transform:scaleX(-1);
+
+    }
+
+}
+
+#bubbleLayer{
+    position:absolute;
+    width:100%;
+    height:100%;
+    top:0;
+    left:0;
+    overflow:hidden;
+    pointer-events:none;
+}
+
+.bubble{
+
+    position:absolute;
+
+    bottom:-30px;
+
+    width:12px;
+    height:12px;
+
+    background:rgba(255,255,255,.35);
+
+    border:1px solid rgba(255,255,255,.5);
+
+    border-radius:50%;
+
+    animation:rise linear forwards;
+
+}
+
+@keyframes rise{
+
+    from{
+
+        transform: translateY(0);
+        opacity: .7;
+
+    }
+
+    to{
+
+        transform: translateY(-650px);
+        opacity: 0;
 
     }
 
