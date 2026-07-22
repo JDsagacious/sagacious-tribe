@@ -23,8 +23,14 @@ function createBottle(){
 
     bottle.className = "bottle";
 
-    bottle.style.left = Math.random()*85 + "%";
-    bottle.style.top = Math.random()*80 + "%";
+ const bottleWidth = 55;
+const bottleHeight = 70;
+
+const maxX = ocean.clientWidth - bottleWidth;
+const maxY = ocean.clientHeight - bottleHeight;
+
+bottle.style.left = Math.floor(Math.random() * maxX) + "px";
+bottle.style.top = Math.floor(Math.random() * maxY) + "px";
 
     bottle.onclick = function(){
 
